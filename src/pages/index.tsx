@@ -30,7 +30,7 @@ const useStyles = {
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '70vh',
+        height: '80vh',
         overflowY: 'auto'
     }
 }
@@ -59,7 +59,11 @@ export default function Home() {
                     texts.push(value)
                     setTexts([...texts])
                 } else {
-                    texts.push("Pas correct")
+                    console.log('Insult')
+                    console.log(predict.result)
+                    console.log(value)
+                    texts.push(`Votre message "${value}" peut être mal interprété ou est malveillant`)
+                    texts.push(value)
                     setTexts([...texts])
                 }
         })
@@ -90,21 +94,21 @@ export default function Home() {
                             <List sx={useStyles.messageArea}>
                                 {getListItem()}
                             </List>
-                            <Divider/>
-                            <Grid container style={{padding: '20px'}}>
-                                <Grid item xs={11}>
-                                    <TextField
-                                        onChange={handleChange}
-                                        id="outlined-basic-email"
-                                        label="Type Something"
-                                        fullWidth/>
-                                </Grid>
-                                <Grid xs={1}>
-                                    <Fab onClick={handleClick} color="primary" aria-label="add"><Send/></Fab>
-                                </Grid>
-                            </Grid>
                         </Grid>
                     </Grid>
+                    <Grid container style={{padding: '20px', width: "100%"}}>
+                        <Grid item xs={11}>
+                            <TextField
+                                onChange={handleChange}
+                                id="outlined-basic-email"
+                                label="Type Something"
+                                fullWidth/>
+                        </Grid>
+                        <Grid xs={1}>
+                            <Fab onClick={handleClick} color="primary" aria-label="add"><Send/></Fab>
+                        </Grid>
+                    </Grid>
+
                 </Box>
             </Box>
         </Box>
