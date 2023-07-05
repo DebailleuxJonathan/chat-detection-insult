@@ -1,7 +1,6 @@
-import { Inter } from 'next/font/google'
 import {
     Box,
-    Divider,
+    Button,
     Fab,
     Grid,
     List,
@@ -46,6 +45,7 @@ interface ResponseAI {
 export default function Home() {
     const [texts, setTexts] = useState<string[]>([])
     const [value, setValue] = useState<string>("")
+    const [isNotCorrect, setIsNotCorrect] = useState<boolean>(false)
     const IA = new CallAI()
     const handleChange = (event: any) => {
         setValue(event.target.value)
@@ -62,9 +62,9 @@ export default function Home() {
                     console.log('Insult')
                     console.log(predict.result)
                     console.log(value)
-                    texts.push(`Votre message "${value}" peut être mal interprété ou est malveillant`)
-                    texts.push(value)
+                    texts.push(`Votre message "${value}" peut être mal interprété ou est malveillant, voulez vous envoyer le message quand même ?`)
                     setTexts([...texts])
+                    setIsNotCorrect(true)
                 }
         })
 
@@ -93,6 +93,17 @@ export default function Home() {
                         <Grid item xs={12}>
                             <List sx={useStyles.messageArea}>
                                 {getListItem()}
+                                {isNotCorrect ? <>
+                                    <Button variant="outlined"  onClick={() => {
+                                        setIsNotCorrect(false)
+                                        texts.pop()
+                                        texts.push(value)
+                                    }}>Oui</Button>
+                                    <Button variant="outlined" onClick={() => {
+                                        setIsNotCorrect(false)
+                                        texts.pop()
+                                    }}>Non</Button>
+                                </> : null}
                             </List>
                         </Grid>
                     </Grid>
